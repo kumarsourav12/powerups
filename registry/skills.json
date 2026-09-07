@@ -6,7 +6,7 @@
       "path": "skills/human-docs/SKILL.md",
       "sha256": "31772abcb14ca2fbb31f49c918f99b9b6f74fb13b801670aee100c63f6172072",
       "license": "MIT",
-      "targets": ["generic"]
+      "targets": ["generic", "codex", "claude-code", "cursor", "copilot", "gemini"]
     }
   ]
 }
