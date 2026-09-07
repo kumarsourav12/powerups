@@ -1,5 +1,4 @@
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -17,23 +16,22 @@ const patterns = [
   ['private hostname', /\b(?:10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2})\b/],
 ];
 
-function trackedFiles(root) {
+function trackedBlobs(root) {
   return execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'buffer' })
     .toString('utf8')
     .split('\0')
-    .filter(Boolean);
-}
-
-function isText(contents) {
-  return !contents.includes(0);
+    .filter(Boolean)
+    .map((path) => ({
+      path,
+      objectId: execFileSync('git', ['rev-parse', `:${path}`], { cwd: root, encoding: 'utf8' }).trim(),
+    }));
 }
 
 export function checkPublicContent({ root = repositoryRoot } = {}) {
   const violations = [];
 
-  for (const path of trackedFiles(root)) {
-    const contents = readFileSync(resolve(root, path));
-    if (!isText(contents)) continue;
+  for (const { path, objectId } of trackedBlobs(root)) {
+    const contents = execFileSync('git', ['cat-file', 'blob', objectId], { cwd: root, encoding: 'buffer' });
 
     const text = contents.toString('utf8');
     for (const [kind, pattern] of patterns) {
