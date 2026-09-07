@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "check:public-content": "node scripts/check-public-content.mjs",
     "test": "node --test"
   }
 }
