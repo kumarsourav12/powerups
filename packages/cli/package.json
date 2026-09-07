@@ -1,12 +1,23 @@
 {
   "name": "@agent-skills/cli",
   "version": "0.1.0",
-  "private": true,
+  "description": "Install portable coding-agent skills.",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "agent-skills": "bin/agent-skills.mjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "registry",
+    "skills"
+  ],
+  "scripts": {
+    "prepack": "node scripts/package-assets.mjs copy",
+    "postpack": "node scripts/package-assets.mjs clean"
   }
 }

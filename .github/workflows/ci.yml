@@ -15,5 +15,8 @@ jobs:
         with:
           node-version: 20
       - run: npm test
+      - run: npm run check:catalog
       - run: npm run check:public-content
       - run: npm pack --dry-run
+      - run: npm pack --dry-run
+        working-directory: packages/cli

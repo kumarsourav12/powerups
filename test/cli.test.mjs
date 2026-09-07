@@ -14,6 +14,8 @@ function createFixture() {
   cpSync(join(repositoryRoot, 'packages', 'cli'), join(root, 'packages', 'cli'), { recursive: true });
   cpSync(join(repositoryRoot, 'registry'), join(root, 'registry'), { recursive: true });
   cpSync(join(repositoryRoot, 'skills'), join(root, 'skills'), { recursive: true });
+  cpSync(join(root, 'registry'), join(root, 'packages', 'cli', 'registry'), { recursive: true });
+  cpSync(join(root, 'skills'), join(root, 'packages', 'cli', 'skills'), { recursive: true });
   const project = join(root, 'project');
   mkdirSync(project);
   return { root, project };
@@ -93,7 +95,7 @@ test('install copies the canonical skill to the generic layout', () => {
 test('install rejects a skill whose canonical source does not match its catalog checksum', () => {
   const fixture = createFixture();
   try {
-    writeFileSync(join(fixture.root, 'skills', 'human-docs', 'SKILL.md'), 'changed source');
+    writeFileSync(join(fixture.root, 'packages', 'cli', 'skills', 'human-docs', 'SKILL.md'), 'changed source');
     const result = runCli(fixture, ['install', 'human-docs', '--agent', 'generic']);
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /checksum/i);
@@ -106,7 +108,7 @@ test('install rejects a skill whose canonical source does not match its catalog 
 test('install rejects a traversal skill id before copying outside its target layout', () => {
   const fixture = createFixture();
   try {
-    const catalogPath = join(fixture.root, 'registry', 'skills.json');
+    const catalogPath = join(fixture.root, 'packages', 'cli', 'registry', 'skills.json');
     const catalog = JSON.parse(readFileSync(catalogPath, 'utf8'));
     catalog.skills[0].id = '../../outside';
     writeFileSync(catalogPath, `${JSON.stringify(catalog)}\n`);
@@ -127,7 +129,7 @@ test('list rejects catalog entries with missing fields or unsafe source paths', 
   ]) {
     const fixture = createFixture();
     try {
-      const catalogPath = join(fixture.root, 'registry', 'skills.json');
+      const catalogPath = join(fixture.root, 'packages', 'cli', 'registry', 'skills.json');
       const catalog = JSON.parse(readFileSync(catalogPath, 'utf8'));
       change(catalog.skills[0]);
       writeFileSync(catalogPath, `${JSON.stringify(catalog)}\n`);

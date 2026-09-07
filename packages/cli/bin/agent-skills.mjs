@@ -6,7 +6,7 @@ import { findSkill, readCatalog, verifySource } from '../lib/catalog.mjs';
 import { installSkill } from '../lib/install.mjs';
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const repositoryRoot = resolve(packageRoot, '..', '..');
+const repositoryRoot = packageRoot;
 
 function usage() {
   return 'Usage: agent-skills list | agent-skills install <id> --agent <name> [--dry-run]';
