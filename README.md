@@ -4,7 +4,7 @@ Portable, versioned skills for coding agents. Each skill stays in the standard `
 
 ## Use a skill
 
-After the npm package is published, list the available skills:
+List the available skills:
 
 ```bash
 npx @kumarsourav/powerups list
