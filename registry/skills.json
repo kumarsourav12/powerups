@@ -4,7 +4,7 @@
       "id": "human-docs",
       "version": "1.0.0",
       "path": "skills/human-docs/SKILL.md",
-      "sha256": "065ecd787c664e46bbc8eca87958efd0708fd06a2120216e54899de4d9f1caf6",
+      "sha256": "31772abcb14ca2fbb31f49c918f99b9b6f74fb13b801670aee100c63f6172072",
       "license": "MIT",
       "targets": ["generic"]
     }
