@@ -7,6 +7,14 @@
       "sha256": "31772abcb14ca2fbb31f49c918f99b9b6f74fb13b801670aee100c63f6172072",
       "license": "MIT",
       "targets": ["generic", "codex", "claude-code", "cursor", "copilot", "gemini"]
+    },
+    {
+      "id": "tldr",
+      "version": "1.0.0",
+      "path": "skills/tldr/SKILL.md",
+      "sha256": "772456e00567055ca5f1f91196201332a4363edf9e5f93a6e6db6e888d0c5570",
+      "license": "MIT",
+      "targets": ["generic", "codex", "claude-code", "cursor", "copilot", "gemini"]
     }
   ]
 }
