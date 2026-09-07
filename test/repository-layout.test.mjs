@@ -24,7 +24,7 @@ test('Powerups publishing assets provide a portable manifest and documented adap
   assert.equal(manifest.name, 'powerups');
   assert.equal(manifest.version, '0.1.0');
   assert.equal(manifest.skills, './skills');
-  assert.equal(cliPackage.name, '@kumarsourav12/powerups');
+  assert.equal(cliPackage.name, '@kumarsourav/powerups');
   assert.equal(cliPackage.bin.powerups, 'bin/powerups.mjs');
   assert.match(installer, /generic:\s*'\.powerups'/);
   assert.match(installer, /\.powerups-lock\.json/);

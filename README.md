@@ -7,19 +7,19 @@ Portable, versioned skills for coding agents. Each skill stays in the standard `
 After the npm package is published, list the available skills:
 
 ```bash
-npx @kumarsourav12/powerups list
+npx @kumarsourav/powerups list
 ```
 
 Install a skill into a project-local agent directory:
 
 ```bash
-npx @kumarsourav12/powerups install human-docs --agent codex
+npx @kumarsourav/powerups install human-docs --agent codex
 ```
 
 Use `--dry-run` to see the destination without changing files:
 
 ```bash
-npx @kumarsourav12/powerups install tldr --agent cursor --dry-run
+npx @kumarsourav/powerups install tldr --agent cursor --dry-run
 ```
 
 The installer verifies the skill checksum before copying it, never runs bundled scripts, and records non-dry-run installs in `.powerups-lock.json`.
