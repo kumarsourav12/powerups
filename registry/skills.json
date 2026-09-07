@@ -1,0 +1,12 @@
+{
+  "skills": [
+    {
+      "id": "human-docs",
+      "version": "1.0.0",
+      "path": "skills/human-docs/SKILL.md",
+      "sha256": "065ecd787c664e46bbc8eca87958efd0708fd06a2120216e54899de4d9f1caf6",
+      "license": "MIT",
+      "targets": ["generic"]
+    }
+  ]
+}
