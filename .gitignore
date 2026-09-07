@@ -1,0 +1,6 @@
+node_modules/
+.agent-skills-lock.json
+.superpowers/sdd/
+package-lock.json
+npm-debug.log*
+.DS_Store

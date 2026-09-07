@@ -1,8 +1,22 @@
 {
   "name": "agent-skills-marketplace",
-  "private": true,
+  "version": "0.1.0",
+  "description": "Portable skills for coding agents.",
+  "license": "MIT",
   "type": "module",
+  "files": [
+    "adapters",
+    "plugin.json",
+    "registry",
+    "skills"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
+    "check": "npm test && npm run check:public-content",
+    "check:catalog": "node scripts/validate-catalog.mjs",
+    "check:layout": "node --test test/repository-layout.test.mjs",
     "check:public-content": "node scripts/check-public-content.mjs",
     "test": "node --test"
   }

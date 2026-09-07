@@ -1,0 +1,5 @@
+{
+  "name": "agent-skills-marketplace",
+  "version": "0.1.0",
+  "skills": "./skills"
+}
