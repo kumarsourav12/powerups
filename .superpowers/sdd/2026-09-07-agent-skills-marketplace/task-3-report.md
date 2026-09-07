@@ -10,10 +10,14 @@ Implemented a dependency-free Node CLI at `packages/cli`.
 - Codex, Claude Code, Cursor, Copilot, and Gemini aliases use documented project-local candidate layouts only; they do not claim native marketplace support.
 - Non-dry-run installs update `.agent-skills-lock.json`; dry runs do not write project files.
 - Installation copies files only and does not execute source scripts.
+- Catalog entries require all installer fields, safe lowercase slug IDs, and canonical `skills/<id>/SKILL.md` paths.
+- Destination resolution is constrained to the selected project-local target layout before copying.
 
 ## Test-first evidence
 
 Before the package existed, `npm test -- test/cli.test.mjs` failed for all initial CLI tests because `packages/cli` was absent (`ENOENT`).
+
+The path-confinement regression test initially reproduced the issue: an `../../outside` catalog ID exited the generic target layout and the CLI returned success. The installer now rejects that ID before any copy.
 
 ## Verification
 

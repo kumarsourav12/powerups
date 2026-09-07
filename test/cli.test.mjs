@@ -103,6 +103,44 @@ test('install rejects a skill whose canonical source does not match its catalog 
   }
 });
 
+test('install rejects a traversal skill id before copying outside its target layout', () => {
+  const fixture = createFixture();
+  try {
+    const catalogPath = join(fixture.root, 'registry', 'skills.json');
+    const catalog = JSON.parse(readFileSync(catalogPath, 'utf8'));
+    catalog.skills[0].id = '../../outside';
+    writeFileSync(catalogPath, `${JSON.stringify(catalog)}\n`);
+
+    const result = runCli(fixture, ['install', '../../outside', '--agent', 'generic']);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /skill id/i);
+    assert.equal(existsSync(join(fixture.root, 'outside', 'SKILL.md')), false);
+  } finally {
+    removeFixture(fixture);
+  }
+});
+
+test('list rejects catalog entries with missing fields or unsafe source paths', () => {
+  for (const change of [
+    (skill) => { delete skill.sha256; },
+    (skill) => { skill.path = '../SKILL.md'; },
+  ]) {
+    const fixture = createFixture();
+    try {
+      const catalogPath = join(fixture.root, 'registry', 'skills.json');
+      const catalog = JSON.parse(readFileSync(catalogPath, 'utf8'));
+      change(catalog.skills[0]);
+      writeFileSync(catalogPath, `${JSON.stringify(catalog)}\n`);
+
+      const result = runCli(fixture, ['list']);
+      assert.notEqual(result.status, 0);
+      assert.match(result.stderr, /missing|required|source path/i);
+    } finally {
+      removeFixture(fixture);
+    }
+  }
+});
+
 test('install refuses an unsupported target', () => {
   const fixture = createFixture();
   try {

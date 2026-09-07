@@ -1,5 +1,5 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, relative, resolve } from 'node:path';
+import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 
 const targetLayouts = {
   generic: '.agent-skills',
@@ -13,7 +13,13 @@ const targetLayouts = {
 export function targetDestination(projectRoot, skillId, agent) {
   const layout = targetLayouts[agent];
   if (!layout) throw new Error(`Unsupported target: ${agent}`);
-  return resolve(projectRoot, layout, skillId);
+  const targetRoot = resolve(projectRoot, layout);
+  const destination = resolve(targetRoot, skillId);
+  const destinationRelative = relative(targetRoot, destination);
+  if (destinationRelative === '' || destinationRelative === '..' || destinationRelative.startsWith(`..${sep}`) || isAbsolute(destinationRelative)) {
+    throw new Error(`Invalid skill id: ${skillId}.`);
+  }
+  return destination;
 }
 
 function projectRelative(projectRoot, destination) {
