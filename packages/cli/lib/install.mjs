@@ -2,7 +2,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node
 import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 
 const targetLayouts = {
-  generic: '.agent-skills',
+  generic: '.powerups',
   codex: '.codex/skills',
   'claude-code': '.claude/skills',
   cursor: '.cursor/skills',
@@ -27,7 +27,7 @@ function projectRelative(projectRoot, destination) {
 }
 
 function readLockfile(projectRoot) {
-  const file = join(projectRoot, '.agent-skills-lock.json');
+  const file = join(projectRoot, '.powerups-lock.json');
   if (!existsSync(file)) return { skills: [] };
   const lockfile = JSON.parse(readFileSync(file, 'utf8'));
   return { ...lockfile, skills: Array.isArray(lockfile.skills) ? lockfile.skills : [] };
@@ -37,7 +37,7 @@ function writeLockfile(projectRoot, entry) {
   const lockfile = readLockfile(projectRoot);
   const skills = lockfile.skills.filter((skill) => skill.id !== entry.id || skill.agent !== entry.agent);
   skills.push(entry);
-  writeFileSync(join(projectRoot, '.agent-skills-lock.json'), `${JSON.stringify({ ...lockfile, skills }, null, 2)}\n`);
+  writeFileSync(join(projectRoot, '.powerups-lock.json'), `${JSON.stringify({ ...lockfile, skills }, null, 2)}\n`);
 }
 
 export function installSkill({ projectRoot, repositoryRoot, skill, agent, dryRun, sourceDirectory }) {

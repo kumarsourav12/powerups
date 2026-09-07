@@ -1,4 +1,4 @@
-# Agent Skills Marketplace
+# Powerups
 
 Portable skills for coding agents.
 

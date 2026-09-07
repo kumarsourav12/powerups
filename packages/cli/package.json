@@ -1,11 +1,11 @@
 {
-  "name": "@agent-skills/cli",
+  "name": "@kumarsourav12/powerups",
   "version": "0.1.0",
   "description": "Install portable coding-agent skills.",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "agent-skills": "bin/agent-skills.mjs"
+    "powerups": "bin/powerups.mjs"
   },
   "engines": {
     "node": ">=20"

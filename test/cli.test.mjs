@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const repositoryRoot = fileURLToPath(new URL('..', import.meta.url));
 
 function createFixture() {
-  const root = mkdtempSync(join(tmpdir(), 'agent-skills-cli-'));
+  const root = mkdtempSync(join(tmpdir(), 'powerups-cli-'));
   mkdirSync(join(root, 'packages', 'cli'), { recursive: true });
   cpSync(join(repositoryRoot, 'packages', 'cli'), join(root, 'packages', 'cli'), { recursive: true });
   cpSync(join(repositoryRoot, 'registry'), join(root, 'registry'), { recursive: true });
@@ -24,7 +24,7 @@ function createFixture() {
 function runCli(fixture, args) {
   return spawnSync(
     process.execPath,
-    [join(fixture.root, 'packages', 'cli', 'bin', 'agent-skills.mjs'), ...args],
+    [join(fixture.root, 'packages', 'cli', 'bin', 'powerups.mjs'), ...args],
     { cwd: fixture.project, encoding: 'utf8' },
   );
 }
@@ -50,10 +50,10 @@ test('dry-run reports the generic destination and files without changing the pro
   try {
     const result = runCli(fixture, ['install', 'human-docs', '--agent', 'generic', '--dry-run']);
     assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stdout, /\.agent-skills\/human-docs/);
+    assert.match(result.stdout, /\.powerups\/human-docs/);
     assert.match(result.stdout, /SKILL\.md/);
-    assert.equal(existsSync(join(fixture.project, '.agent-skills', 'human-docs', 'SKILL.md')), false);
-    assert.equal(existsSync(join(fixture.project, '.agent-skills-lock.json')), false);
+    assert.equal(existsSync(join(fixture.project, '.powerups', 'human-docs', 'SKILL.md')), false);
+    assert.equal(existsSync(join(fixture.project, '.powerups-lock.json')), false);
   } finally {
     removeFixture(fixture);
   }
@@ -84,7 +84,7 @@ test('install copies the canonical skill to the generic layout', () => {
     const result = runCli(fixture, ['install', 'human-docs', '--agent', 'generic']);
     assert.equal(result.status, 0, result.stderr);
     assert.equal(
-      readFileSync(join(fixture.project, '.agent-skills', 'human-docs', 'SKILL.md'), 'utf8'),
+      readFileSync(join(fixture.project, '.powerups', 'human-docs', 'SKILL.md'), 'utf8'),
       readFileSync(join(fixture.root, 'skills', 'human-docs', 'SKILL.md'), 'utf8'),
     );
   } finally {
@@ -99,7 +99,7 @@ test('install rejects a skill whose canonical source does not match its catalog 
     const result = runCli(fixture, ['install', 'human-docs', '--agent', 'generic']);
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /checksum/i);
-    assert.equal(existsSync(join(fixture.project, '.agent-skills', 'human-docs')), false);
+    assert.equal(existsSync(join(fixture.project, '.powerups', 'human-docs')), false);
   } finally {
     removeFixture(fixture);
   }
@@ -159,13 +159,13 @@ test('install records the installed skill in a project lockfile', () => {
   try {
     const result = runCli(fixture, ['install', 'human-docs', '--agent', 'generic']);
     assert.equal(result.status, 0, result.stderr);
-    const lockfile = JSON.parse(readFileSync(join(fixture.project, '.agent-skills-lock.json'), 'utf8'));
+    const lockfile = JSON.parse(readFileSync(join(fixture.project, '.powerups-lock.json'), 'utf8'));
     assert.deepEqual(lockfile.skills, [{
       id: 'human-docs',
       version: '1.0.0',
       sha256: '31772abcb14ca2fbb31f49c918f99b9b6f74fb13b801670aee100c63f6172072',
       agent: 'generic',
-      path: '.agent-skills/human-docs',
+      path: '.powerups/human-docs',
     }]);
   } finally {
     removeFixture(fixture);

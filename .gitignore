@@ -1,5 +1,5 @@
 node_modules/
-.agent-skills-lock.json
+.powerups-lock.json
 .superpowers/sdd/
 package-lock.json
 npm-debug.log*

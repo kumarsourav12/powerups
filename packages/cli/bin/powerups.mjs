@@ -9,7 +9,7 @@ const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repositoryRoot = packageRoot;
 
 function usage() {
-  return 'Usage: agent-skills list | agent-skills install <id> --agent <name> [--dry-run]';
+  return 'Usage: powerups list | powerups install <id> --agent <name> [--dry-run]';
 }
 
 function parseInstall(arguments_) {
